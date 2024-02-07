@@ -130,6 +130,13 @@
         </profile>
     </profiles>
 
+    <repositories>
+        <repository>
+            <id>iridiumdevelopment</id>
+            <url>https://nexus.iridiumdevelopment.net/repository/maven-releases/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>com.mysql</groupId>
@@ -146,6 +153,18 @@
             <groupId>io.github.cdimascio</groupId>
             <artifactId>dotenv-java</artifactId>
             <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>24.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.iridium</groupId>
+            <artifactId>IridiumColorAPI</artifactId>
+            <version>1.0.6</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
