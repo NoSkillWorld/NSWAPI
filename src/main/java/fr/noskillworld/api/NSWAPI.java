@@ -2,23 +2,24 @@ package fr.noskillworld.api;
 
 import fr.noskillworld.api.database.DatabaseManager;
 import fr.noskillworld.api.honorranks.impl.HonorRanksHandlerImpl;
+import fr.noskillworld.api.utils.Credentials;
 
 import java.util.logging.Logger;
 
 public class NSWAPI {
 
-    public static NSWAPI api;
+    private static NSWAPI api;
 
     private final Logger logger;
 
     private static DatabaseManager databaseManager;
     private static HonorRanksHandlerImpl honorRanksHandler;
 
-    public NSWAPI() {
+    public NSWAPI(Credentials credentials) {
         api = this;
         this.logger = Logger.getLogger("NSWAPI");
 
-        databaseManager = new DatabaseManager();
+        databaseManager = new DatabaseManager(credentials);
         honorRanksHandler = new HonorRanksHandlerImpl();
     }
 

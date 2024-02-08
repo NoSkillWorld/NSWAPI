@@ -1,6 +1,8 @@
 package fr.noskillworld.api.database;
 
-import io.github.cdimascio.dotenv.Dotenv;
+import fr.noskillworld.api.NSWAPI;
+import fr.noskillworld.api.utils.Credentials;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,26 +16,25 @@ public class Connector {
     private final String password;
     private final String name;
 
-    public Connector() {
-        Dotenv dotenv = Dotenv.configure()
-                .directory("/env/")
-                .filename(".env")
-                .load();
-
-        user = dotenv.get("DB_USER");
-        password = dotenv.get("DB_PASSWORD");
-        name = dotenv.get("DB_NAME");
+    public Connector(@NotNull Credentials credentials) {
+        user = credentials.getDBUser();
+        password = credentials.getDBPassword();
+        name = credentials.getDBName();
 
         connect();
     }
 
     public void connect() {
+        if (user == null || password == null || name == null) {
+            NSWAPI.getAPI().getLogger().severe("Credentials cannot be empty! Aborting connection.");
+            return;
+        }
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/" + name, user, password);
         } catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
-            System.out.println("SQLState: " + e.getSQLState());
-            System.out.println("VendorError: " + e.getErrorCode());
+            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
+            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
+            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
         }
     }
 
@@ -49,9 +50,9 @@ public class Connector {
         try {
             conn.close();
         } catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
-            System.out.println("SQLState: " + e.getSQLState());
-            System.out.println("VendorError: " + e.getErrorCode());
+            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
+            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
+            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
         }
     }
 

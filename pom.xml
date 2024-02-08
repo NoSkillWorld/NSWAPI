@@ -6,7 +6,7 @@
 
     <groupId>fr.noskillworld.api</groupId>
     <artifactId>nswapi</artifactId>
-    <version>0.0.1</version>
+    <version>0.2.0</version>
     <description>
         API for the NoSkillWorld minecraft server.
         CURRENTLY IN DEVELOPMENT,
@@ -106,11 +106,6 @@
                     <artifactId>protobuf-java</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.github.cdimascio</groupId>
-            <artifactId>dotenv-java</artifactId>
-            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
