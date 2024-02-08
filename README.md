@@ -9,7 +9,7 @@ The repository :
 <repositories>
     <repository> <!--The URL is temporary-->
         <id>NSW</id>
-        <url>http://109.238.11.116:8081/repository/NSWAPI/</url>
+        <url>https://nexus.noskillworld.fr/repository/NSWAPI/</url>
     </repository>
     ...
 </repositories>
@@ -25,12 +25,12 @@ The dependency :
         <scope>compile</scope>
     </dependency>
     ...
-<dependencies>
+</dependencies>
 ```
 
 ## Using the API:
 
-To use the the api, simply create a new instance of the api juste like so :
+To use the api, simply create a new instance just like so :
 ```java
 String user = "User"; //The database user
 String password = "Pass"; //The database password
