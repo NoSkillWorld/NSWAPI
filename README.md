@@ -21,7 +21,7 @@ The dependency :
     <dependency>
         <groupId>fr.noskillworld.api</groupId>
         <artifactId>nswapi</artifactId>
-        <version>0.2.0</version>
+        <version>0.2.1</version>
         <scope>compile</scope>
     </dependency>
     ...
