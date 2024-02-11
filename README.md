@@ -21,7 +21,7 @@ The dependency :
     <dependency>
         <groupId>fr.noskillworld.api</groupId>
         <artifactId>nswapi</artifactId>
-        <version>0.2.1</version>
+        <version>0.2.2</version>
         <scope>compile</scope>
     </dependency>
     ...
@@ -30,12 +30,12 @@ The dependency :
 
 ## Using the API:
 
-To use the api, simply create a new instance just like so :
+To use the api, simply call the create() method just like so :
 ```java
 String user = "User"; //The database user
 String password = "Pass"; //The database password
 String name = "Name"; //The database name
 
 Credentials credentials = new Credentials(user, password, name); //Creates credentials
-NSWAPI api = new NSWAPI(credentials); //Creates an instance of the API
+NSWAPI api = NSWAPI.create(credentials); //Creates an instance of the API
 ```

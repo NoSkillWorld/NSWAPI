@@ -18,11 +18,11 @@ public class RequestsHandler {
 
     public void retrieveData(String query) {
         if (!isConnected()) {
-            NSWAPI.getDatabaseManager().getConnector().connect();
+            NSWAPI.getAPI().getDatabaseManager().getConnector().connect();
         }
 
         try {
-            statement = NSWAPI.getDatabaseManager().getConnector().getConn().createStatement();
+            statement = NSWAPI.getAPI().getDatabaseManager().getConnector().getConn().createStatement();
             resultSet = statement.executeQuery(query);
         } catch (SQLException e) {
             NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
@@ -33,11 +33,11 @@ public class RequestsHandler {
 
     public void updateData(String query) {
         if (!isConnected()) {
-            NSWAPI.getDatabaseManager().getConnector().connect();
+            NSWAPI.getAPI().getDatabaseManager().getConnector().connect();
         }
 
         try {
-            statement = NSWAPI.getDatabaseManager().getConnector().getConn().createStatement();
+            statement = NSWAPI.getAPI().getDatabaseManager().getConnector().getConn().createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {
             NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
@@ -65,6 +65,6 @@ public class RequestsHandler {
     }
 
     private boolean isConnected() {
-        return NSWAPI.getDatabaseManager().getConnector().isConnected();
+        return NSWAPI.getAPI().getDatabaseManager().getConnector().isConnected();
     }
 }

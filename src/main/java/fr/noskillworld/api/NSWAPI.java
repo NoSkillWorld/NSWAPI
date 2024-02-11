@@ -12,26 +12,33 @@ public class NSWAPI {
 
     private final Logger logger;
 
-    private static DatabaseManager databaseManager;
-    private static HonorRanksHandlerImpl honorRanksHandler;
+    private final DatabaseManager databaseManager;
+    private final HonorRanksHandlerImpl honorRanksHandler;
 
-    public NSWAPI(Credentials credentials) {
+    private static Credentials creds;
+
+    private NSWAPI() {
         api = this;
         this.logger = Logger.getLogger("NSWAPI");
 
-        databaseManager = new DatabaseManager(credentials);
-        honorRanksHandler = new HonorRanksHandlerImpl();
+        this.databaseManager = new DatabaseManager(creds);
+        this.honorRanksHandler = new HonorRanksHandlerImpl();
+    }
+
+    public static NSWAPI create(Credentials credentials) {
+        creds = credentials;
+        return new NSWAPI();
     }
 
     public Logger getLogger() {
         return logger;
     }
 
-    public static DatabaseManager getDatabaseManager() {
+    public DatabaseManager getDatabaseManager() {
         return databaseManager;
     }
 
-    public static HonorRanksHandlerImpl getHonorRanksHandler() {
+    public HonorRanksHandlerImpl getHonorRanksHandler() {
         return honorRanksHandler;
     }
 

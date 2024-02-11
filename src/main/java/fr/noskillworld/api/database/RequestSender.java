@@ -7,20 +7,21 @@ import java.sql.SQLException;
 public class RequestSender {
 
     private String query;
-    private final RequestsHandler requestsHandler;
+    private RequestsHandler requestsHandler;
 
     public RequestSender() {
         this.query = null;
-        this.requestsHandler = NSWAPI.getDatabaseManager().getRequestHandler();
     }
 
     public void test() {
         query = String.format(Queries.TEST.getQuery(), 20);
+        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
+
         requestsHandler.retrieveData(query);
 
         try {
             while (requestsHandler.resultSet.next()) {
-                System.out.println("TEST: " + requestsHandler.resultSet.getString("playerName"));
+               NSWAPI.getAPI().getLogger().info("DEBUG REQ: " + requestsHandler.resultSet.getString("playerName"));
             }
         } catch (SQLException e) {
             NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
