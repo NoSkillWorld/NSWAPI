@@ -1,13 +1,17 @@
 # NSW API
 
+## Introduction:
+
+NSWAPI is a database management & utility api for the Minecraft server. <br>
+The API provides a database connector, a request sender & the HonorRanks handler
+
 ## Getting started:
+
 Add those to your pom.xml
-<br>
-<br>
-The repository :
+#### The repository:
 ```xml
 <repositories>
-    <repository> <!--The URL is temporary-->
+    <repository>
         <id>NSW</id>
         <url>https://nexus.noskillworld.fr/repository/NSWAPI/</url>
     </repository>
@@ -15,7 +19,7 @@ The repository :
 </repositories>
 ```
 
-The dependency :
+#### The dependency:
 ```xml
 <dependencies>
     <dependency>
@@ -30,7 +34,7 @@ The dependency :
 
 ## Using the API:
 
-To use the api, simply call the create() method just like so :
+To use the api, simply call the create() method just like so:
 ```java
 String user = "User"; //The database user
 String password = "Pass"; //The database password
