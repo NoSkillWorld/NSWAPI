@@ -2,7 +2,7 @@
 
 ## Introduction:
 
-NSWAPI is a database management & utility api for the Minecraft server. <br>
+The NSWAPI is a database management & utility api for our Minecraft server. <br>
 The API provides a database connector, a request sender & the HonorRanks handler
 
 ## Getting started:
@@ -25,7 +25,7 @@ Add those to your pom.xml
     <dependency>
         <groupId>fr.noskillworld.api</groupId>
         <artifactId>nswapi</artifactId>
-        <version>0.2.2</version>
+        <version>0.3.0</version>
         <scope>compile</scope>
     </dependency>
     ...
