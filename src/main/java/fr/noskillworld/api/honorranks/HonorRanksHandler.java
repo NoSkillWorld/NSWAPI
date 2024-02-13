@@ -1,5 +1,7 @@
 package fr.noskillworld.api.honorranks;
 
+import fr.noskillworld.api.entities.NSWPlayer;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -8,14 +10,14 @@ public interface HonorRanksHandler {
     /**
      * Initialize the player's honor data
      *
-     * @param uuid the uuid of the player
+     * @param player the player
      */
-    void init(UUID uuid);
+    void init(NSWPlayer player);
 
     /**
      * Append a certain  amount of points for a specific player
      *
-     * @param uuid the uuid of the player
+     * @param uuid        the uuid of the player
      * @param honorPoints the amount of points to give
      */
     void gainPlayerPoints(UUID uuid, long honorPoints);

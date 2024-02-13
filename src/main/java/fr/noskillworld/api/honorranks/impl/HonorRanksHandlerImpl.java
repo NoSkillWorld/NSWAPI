@@ -2,6 +2,7 @@ package fr.noskillworld.api.honorranks.impl;
 
 import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import fr.noskillworld.api.NSWAPI;
+import fr.noskillworld.api.entities.NSWPlayer;
 import fr.noskillworld.api.honorranks.HonorRanks;
 import fr.noskillworld.api.honorranks.HonorRanksHandler;
 import org.jetbrains.annotations.NotNull;
@@ -14,27 +15,19 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
     private final Map<UUID, @Nullable HonorRanks> playerRank = new HashMap<>();
     private final Map<UUID, Long> playerPoints = new HashMap<>();
 
-    /* TODO: db & hasJoinedOnce() methods
-
     @Override
-    public void init(UUID uuid, String playerName) {
-        if (NSWAPI.getAPI().hasJoinedOnce(uuid)) {
-            int rankId = NSWAPI.getDatabaseManager().getRequestSender().getPlayerRankId(uuid);
-            long points = NSWAPI.getDatabaseManager().getRequestSender().getPlayerPoints(uuid);
+    public void init(NSWPlayer player) {
+        if (NSWAPI.getAPI().hasJoinedOnce(player)) {
+            int rankId = NSWAPI.getAPI().getDatabaseManager().getRequestSender().getPlayerRankId(player);
+            long points = NSWAPI.getAPI().getDatabaseManager().getRequestSender().getPlayerPoints(player);
 
-            playerRank.putIfAbsent(uuid, HonorRanks.getRankById(rankId));
-            playerPoints.putIfAbsent(uuid, points);
+            playerRank.putIfAbsent(player.getUniqueId(), HonorRanks.getRankById(rankId));
+            playerPoints.putIfAbsent(player.getUniqueId(), points);
         } else {
-            playerRank.putIfAbsent(uuid, null);
-            playerPoints.putIfAbsent(uuid, 0L);
-            NSWAPI.getDatabaseManager().getRequestSender().initPlayerData(uuid, playerName);
+            playerRank.putIfAbsent(player.getUniqueId(), null);
+            playerPoints.putIfAbsent(player.getUniqueId(), 0L);
+            NSWAPI.getAPI().getDatabaseManager().getRequestSender().initPlayerData(player);
         }
-    }
-     */
-
-    @Override
-    public void init(UUID uuid) {
-
     }
 
     @Override
