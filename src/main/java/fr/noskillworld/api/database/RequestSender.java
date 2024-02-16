@@ -5,6 +5,8 @@ import fr.noskillworld.api.entities.NSWPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class RequestSender {
@@ -112,6 +114,31 @@ public class RequestSender {
         return result;
     }
 
+    public List<NSWPlayer> getPlayers() {
+        query = Queries.RETRIEVE_ALL_PLAYERS.getQuery();
+        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
+
+        String name;
+        UUID uuid;
+        List<NSWPlayer> result = new ArrayList<>();
+
+        requestsHandler.retrieveData(query);
+        try {
+            while (requestsHandler.resultSet.next()) {
+                name = requestsHandler.resultSet.getString("playerName");
+                uuid = UUID.fromString(requestsHandler.resultSet.getString("uuid"));
+                result.add(new NSWPlayer(name, uuid));
+            }
+        } catch (SQLException e) {
+            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
+            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
+            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
+        } finally {
+            requestsHandler.close();
+        }
+        return result;
+    }
+
     public void deleteReport(int id) {
         query = String.format(Queries.DELETE_REPORT.getQuery(), id);
         requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
@@ -173,7 +200,7 @@ public class RequestSender {
     }
 
     public void createTables() {
-        NSWAPI.getAPI().getServerHandler().getExecutor().execute(this::createPlayerDataTable);
+        createPlayerDataTable();
     }
 
     private void createPlayerDataTable() {

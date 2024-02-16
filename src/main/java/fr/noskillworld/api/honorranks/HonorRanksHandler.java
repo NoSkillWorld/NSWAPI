@@ -105,12 +105,28 @@ public interface HonorRanksHandler {
 
     /**
      * Get a nice list of the player's rank
-     * with usefull information
+     * with useful information
      *
      * @param uuid the uuid of the player
      * @return String
      */
     String getRanks(UUID uuid);
+
+    /**
+     * Get the text format of the current player rank
+     *
+     * @param uuid the uuid of the player
+     * @return String
+     */
+    String getPlayerRankFormat(UUID uuid);
+
+    /**
+     * Get the text formatting of a specific rank
+     *
+     * @param rank the rank to get the format from
+     * @return String
+     */
+    String getRankFormat(HonorRanks rank);
 
     /**
      * Returns true if the player has a rank

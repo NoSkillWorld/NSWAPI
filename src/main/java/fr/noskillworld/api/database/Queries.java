@@ -14,6 +14,7 @@ public enum Queries {
     RETRIEVE_PLAYER_RANK("SELECT rankId FROM core_playerdata WHERE uuid = '%s';"),
     RETRIEVE_PLAYER_POINTS("SELECT honorPoints FROM core_playerdata WHERE uuid = '%s';"),
     RETRIEVE_PLAYER_NAME("SELECT playerName FROM core_playerdata WHERE playerName = '%s';"),
+    RETRIEVE_ALL_PLAYERS("SELECT * FROM core_playerdata;"),
     RETRIEVE_PLAYER("SELECT uuid FROM core_playerdata WHERE uuid = '%s';"),
     RETRIEVE_REPORTS_COUNTS("SELECT COUNT(*) FROM core_reports;"),
 

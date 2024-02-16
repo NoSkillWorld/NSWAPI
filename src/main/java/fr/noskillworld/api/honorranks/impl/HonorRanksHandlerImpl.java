@@ -5,7 +5,6 @@ import fr.noskillworld.api.NSWAPI;
 import fr.noskillworld.api.entities.NSWPlayer;
 import fr.noskillworld.api.honorranks.HonorRanks;
 import fr.noskillworld.api.honorranks.HonorRanksHandler;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -140,12 +139,14 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
         return sb.toString();
     }
 
-    private @NotNull String getPlayerRankFormat(UUID uuid) {
+    @Override
+    public String getPlayerRankFormat(UUID uuid) {
         HonorRanks rank = getPlayerRank(uuid);
         return getRankFormat(rank);
     }
 
-    private @NotNull String getRankFormat(HonorRanks rank) {
+    @Override
+    public String getRankFormat(HonorRanks rank) {
         if (rank == null) {
             return "§70";
         } else {
@@ -153,6 +154,7 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
         }
     }
 
+    @Override
     public boolean isRanked(UUID uuid) {
         return playerRank.get(uuid) != null;
     }

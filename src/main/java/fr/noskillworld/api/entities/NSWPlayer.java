@@ -10,7 +10,7 @@ public class NSWPlayer {
     private final String name;
     private final UUID uuid;
 
-    protected NSWPlayer(String name, UUID uuid) {
+    public NSWPlayer(String name, UUID uuid) {
         this.name = name;
         this.uuid = uuid;
     }
