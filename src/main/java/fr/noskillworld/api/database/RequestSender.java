@@ -2,9 +2,12 @@ package fr.noskillworld.api.database;
 
 import fr.noskillworld.api.NSWAPI;
 import fr.noskillworld.api.entities.NSWPlayer;
+import fr.noskillworld.api.reports.Report;
+import fr.noskillworld.api.reports.ReportType;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -139,6 +142,41 @@ public class RequestSender {
         return result;
     }
 
+    public List<Report> getReports() {
+        query = Queries.RETRIEVE_ALL_REPORTS.getQuery();
+        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
+
+        int id;
+        UUID creatorUuid;
+        UUID reportedUuid;
+        ReportType type;
+        String reason;
+        boolean isResolved;
+        Timestamp timestamp;
+        List<Report> result = new ArrayList<>();
+
+        requestsHandler.retrieveData(query);
+        try {
+            while (requestsHandler.resultSet.next()) {
+                id = requestsHandler.resultSet.getInt("id");
+                creatorUuid = UUID.fromString(requestsHandler.resultSet.getString("creatorUuid"));
+                reportedUuid = UUID.fromString(requestsHandler.resultSet.getString("reportedUuid"));
+                type = ReportType.getTypeById(requestsHandler.resultSet.getInt("typeId"));
+                reason = requestsHandler.resultSet.getString("reason");
+                isResolved = requestsHandler.resultSet.getBoolean("isResolved");
+                timestamp = requestsHandler.resultSet.getTimestamp("timestamp");
+                result.add(new Report(id, creatorUuid, reportedUuid, type, reason, isResolved, timestamp));
+            }
+        } catch (SQLException e) {
+            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
+            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
+            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
+        } finally {
+            requestsHandler.close();
+        }
+        return result;
+    }
+
     public void deleteReport(int id) {
         query = String.format(Queries.DELETE_REPORT.getQuery(), id);
         requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
@@ -155,24 +193,8 @@ public class RequestSender {
         requestsHandler.close();
     }
 
-    public void setDeathCount(int count, UUID uuid) {
-        query = String.format(Queries.UPDATE_DEATH_COUNT.getQuery(), count, uuid);
-        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
-
-        requestsHandler.updateData(query);
-        requestsHandler.close();
-    }
-
-    public void setKillCount(int count, UUID uuid) {
-        query = String.format(Queries.UPDATE_KILL_COUNT.getQuery(), count, uuid);
-        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
-
-        requestsHandler.updateData(query);
-        requestsHandler.close();
-    }
-
-    public void setTimePlayed(long time, UUID uuid) {
-        query = String.format(Queries.UPDATE_TIME_PLAYED.getQuery(), time, uuid);
+    public void setMinecraftStats(int deathCount, int killCount, long timePlayed, UUID uuid) {
+        query = String.format(Queries.UPDATE_MC_STATS.getQuery(), deathCount, killCount, timePlayed, uuid);
         requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);

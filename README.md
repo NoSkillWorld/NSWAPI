@@ -25,7 +25,7 @@ Add those to your pom.xml
     <dependency>
         <groupId>fr.noskillworld.api</groupId>
         <artifactId>nswapi</artifactId>
-        <version>0.3.1</version>
+        <version>0.3.2</version>
         <scope>compile</scope>
     </dependency>
     ...

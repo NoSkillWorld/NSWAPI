@@ -30,4 +30,8 @@ public class NSWPlayer {
     public HonorRanks getHonorRank() {
         return NSWAPI.getAPI().getHonorRanksHandler().getPlayerRank(uuid);
     }
+
+    public boolean hasJoinedOnce() {
+        return NSWAPI.getAPI().hasJoinedOnce(this);
+    }
 }

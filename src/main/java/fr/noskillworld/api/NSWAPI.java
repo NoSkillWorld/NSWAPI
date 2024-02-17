@@ -3,6 +3,7 @@ package fr.noskillworld.api;
 import fr.noskillworld.api.database.DatabaseManager;
 import fr.noskillworld.api.entities.NSWPlayer;
 import fr.noskillworld.api.honorranks.impl.HonorRanksHandlerImpl;
+import fr.noskillworld.api.reports.impl.ReportHandlerImpl;
 import fr.noskillworld.api.utils.Credentials;
 import fr.noskillworld.api.utils.ServerHandler;
 import org.jetbrains.annotations.NotNull;
@@ -19,6 +20,7 @@ public class NSWAPI {
 
     private final DatabaseManager databaseManager;
     private final HonorRanksHandlerImpl honorRanksHandler;
+    private final ReportHandlerImpl reportHandler;
     private final ServerHandler serverHandler;
 
     private static Credentials creds;
@@ -31,6 +33,7 @@ public class NSWAPI {
 
         this.databaseManager = new DatabaseManager(creds);
         this.honorRanksHandler = new HonorRanksHandlerImpl();
+        this.reportHandler = new ReportHandlerImpl();
         this.serverHandler = new ServerHandler();
 
         getServerHandler().getExecutor().execute(() -> {
@@ -80,6 +83,10 @@ public class NSWAPI {
 
     public HonorRanksHandlerImpl getHonorRanksHandler() {
         return honorRanksHandler;
+    }
+
+    public ReportHandlerImpl getReportHandler() {
+        return reportHandler;
     }
 
     public ServerHandler getServerHandler() {
