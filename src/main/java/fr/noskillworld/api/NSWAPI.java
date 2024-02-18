@@ -31,10 +31,10 @@ public class NSWAPI {
         api = this;
         this.logger = Logger.getLogger("NSWAPI");
 
+        this.serverHandler = new ServerHandler();
         this.databaseManager = new DatabaseManager(creds);
         this.honorRanksHandler = new HonorRanksHandlerImpl();
         this.reportHandler = new ReportHandlerImpl();
-        this.serverHandler = new ServerHandler();
 
         getServerHandler().getExecutor().execute(() -> {
             getDatabaseManager().getRequestSender().createTables();

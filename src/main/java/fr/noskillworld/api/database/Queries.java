@@ -4,8 +4,10 @@ public enum Queries {
     //Update data reqs
     INIT_PLAYER_DATA("INSERT INTO core_playerdata (uuid, playerName, rankId, honorPoints) VALUES ('%s', '%s', 0, 0);"),
     UPDATE_MC_STATS("UPDATE core_playerdata SET deathCount = %d, killCount = %d, timePlayed = %d WHERE uuid = '%s';"),
+    CREATE_REPORT("INSERT INTO core_reports (creatorUuid, creatorName, reportedUuid, reportedName, typeId, typeName, reason) VALUES ('%s', '%s', '%s', '%s', '%d', '%s', '%s');"),
     DELETE_REPORT("DELETE FROM core_reports WHERE id = %d;"),
     MARK_REPORT_RESOLVED("UPDATE core_reports SET isResolved = 1 WHERE id = %d;"),
+    MARK_REPORT_UNRESOLVED("UPDATE core_reports SET isResolved = 0 WHERE id = %d;"),
     UPDATE_PLAYER_DATA("UPDATE core_playerdata SET rankId = %d, honorPoints = %d WHERE uuid = '%s';"),
 
     //Retrieve data reqs

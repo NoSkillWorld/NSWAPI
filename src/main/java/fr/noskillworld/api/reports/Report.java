@@ -11,7 +11,7 @@ public class Report {
     private final UUID reportedUuid;
     private final ReportType reportType;
     private final String reason;
-    private final boolean isResolved;
+    private boolean isResolved;
     private final Timestamp timestamp;
 
     public Report(int id, UUID creatorUuid, UUID reportedUuid, ReportType type, String reason, boolean isResolved, Timestamp timestamp) {
@@ -58,5 +58,9 @@ public class Report {
 
     public String getReportTime() {
         return new SimpleDateFormat("HH:mm").format(timestamp);
+    }
+
+    public void setResolved(boolean isResolved) {
+        this.isResolved = isResolved;
     }
 }

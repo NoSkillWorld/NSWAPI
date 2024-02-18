@@ -164,7 +164,7 @@ public class RequestSender {
                 type = ReportType.getTypeById(requestsHandler.resultSet.getInt("typeId"));
                 reason = requestsHandler.resultSet.getString("reason");
                 isResolved = requestsHandler.resultSet.getBoolean("isResolved");
-                timestamp = requestsHandler.resultSet.getTimestamp("timestamp");
+                timestamp = requestsHandler.resultSet.getTimestamp("date");
                 result.add(new Report(id, creatorUuid, reportedUuid, type, reason, isResolved, timestamp));
             }
         } catch (SQLException e) {
@@ -177,6 +177,14 @@ public class RequestSender {
         return result;
     }
 
+    public void createReport(@NotNull NSWPlayer creator, @NotNull NSWPlayer reported, @NotNull ReportType type, String reason) {
+        query = String.format(Queries.CREATE_REPORT.getQuery(), creator.getUniqueId(), creator.getName(), reported.getUniqueId(), reported.getName(), type.geTypeId(), type.getDisplayName(), reason);
+        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
+
+        requestsHandler.updateData(query);
+        requestsHandler.close();
+    }
+
     public void deleteReport(int id) {
         query = String.format(Queries.DELETE_REPORT.getQuery(), id);
         requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
@@ -187,6 +195,14 @@ public class RequestSender {
 
     public void markReportAsResolved(int id) {
         query = String.format(Queries.MARK_REPORT_RESOLVED.getQuery(), id);
+        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
+
+        requestsHandler.updateData(query);
+        requestsHandler.close();
+    }
+
+    public void markReportAsUnresolved(int id) {
+        query = String.format(Queries.MARK_REPORT_UNRESOLVED.getQuery(), id);
         requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);

@@ -12,20 +12,15 @@ import java.util.List;
 
 public class ReportHandlerImpl implements ReportsHandler {
 
-    private List<Report> reports;
-
-    public ReportHandlerImpl() {
-        NSWAPI.getAPI().getServerHandler().getExecutor().execute(() -> reports = NSWAPI.getAPI().getDatabaseManager().getRequestSender().getReports());
-    }
-
     @Override
     public List<Report> getReports() {
-        return reports;
+        return NSWAPI.getAPI().getDatabaseManager().getRequestSender().getReports();
     }
 
     @Override
     public List<Report> getUnResolvedReports() {
         List<Report> unresolvedReports = new ArrayList<>();
+        List<Report> reports = getReports();
 
         for (Report report : reports) {
             if (!report.isResolved()) {
@@ -38,6 +33,7 @@ public class ReportHandlerImpl implements ReportsHandler {
     @Override
     public List<Report> getResolvedReports() {
         List<Report> resolvedReports = new ArrayList<>();
+        List<Report> reports = getReports();
 
         for (Report report : reports) {
             if (report.isResolved()) {
@@ -50,6 +46,7 @@ public class ReportHandlerImpl implements ReportsHandler {
     @Override
     public List<Report> getPlayerReports(NSWPlayer player) {
         List<Report> playerReports = new ArrayList<>();
+        List<Report> reports = getReports();
 
         for (Report report : reports) {
             if (report.getReportedUuid() == player.getUniqueId()) {
@@ -62,6 +59,7 @@ public class ReportHandlerImpl implements ReportsHandler {
     @Override
     public List<Report> getPlayerReportsCreated(NSWPlayer player) {
         List<Report> playerReportsCreated = new ArrayList<>();
+        List<Report> reports = getReports();
 
         for (Report report : reports) {
             if (report.getCreatorUuid() == player.getUniqueId()) {
@@ -73,6 +71,8 @@ public class ReportHandlerImpl implements ReportsHandler {
 
     @Override
     public Report getReportById(int id) {
+        List<Report> reports = getReports();
+
         for (Report report : reports) {
             if (report.getId() == id) {
                 return report;
@@ -83,21 +83,21 @@ public class ReportHandlerImpl implements ReportsHandler {
 
     @Override
     public void createReport(@NotNull NSWPlayer creator, @NotNull NSWPlayer reported, ReportType type, String reason) {
-        //TODO
+        NSWAPI.getAPI().getServerHandler().getExecutor().execute(() -> NSWAPI.getAPI().getDatabaseManager().getRequestSender().createReport(creator, reported, type, reason));
     }
 
     @Override
     public void deleteReport(int id) {
-        //TODO
+        NSWAPI.getAPI().getServerHandler().getExecutor().execute(() -> NSWAPI.getAPI().getDatabaseManager().getRequestSender().deleteReport(id));
     }
 
     @Override
     public void markReportAsResolved(int id) {
-        //TODO
+        NSWAPI.getAPI().getServerHandler().getExecutor().execute(() -> NSWAPI.getAPI().getDatabaseManager().getRequestSender().markReportAsResolved(id));
     }
 
     @Override
     public void markReportAsUnresolved(int id) {
-        //TODO
+        NSWAPI.getAPI().getServerHandler().getExecutor().execute(() -> NSWAPI.getAPI().getDatabaseManager().getRequestSender().markReportAsUnresolved(id));
     }
 }
