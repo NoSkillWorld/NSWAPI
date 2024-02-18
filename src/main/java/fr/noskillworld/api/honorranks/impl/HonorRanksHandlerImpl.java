@@ -5,6 +5,7 @@ import fr.noskillworld.api.NSWAPI;
 import fr.noskillworld.api.entities.NSWPlayer;
 import fr.noskillworld.api.honorranks.HonorRanks;
 import fr.noskillworld.api.honorranks.HonorRanksHandler;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -15,8 +16,8 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
     private final Map<UUID, Long> playerPoints = new HashMap<>();
 
     @Override
-    public void init(NSWPlayer player) {
-        if (NSWAPI.getAPI().hasJoinedOnce(player)) {
+    public void init(@NotNull NSWPlayer player) {
+        if (player.hasJoinedOnce()) {
             int rankId = NSWAPI.getAPI().getDatabaseManager().getRequestSender().getPlayerRankId(player);
             long points = NSWAPI.getAPI().getDatabaseManager().getRequestSender().getPlayerPoints(player);
 
