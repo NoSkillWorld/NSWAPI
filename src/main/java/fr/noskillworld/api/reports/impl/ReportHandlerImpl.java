@@ -18,6 +18,26 @@ public class ReportHandlerImpl implements ReportsHandler {
     }
 
     @Override
+    public List<Report> getReportsByName() {
+        return NSWAPI.getAPI().getDatabaseManager().getRequestSender().getReportsByName();
+    }
+
+    @Override
+    public List<Report> getReportsByNameDesc() {
+        return NSWAPI.getAPI().getDatabaseManager().getRequestSender().getReportsByNameDesc();
+    }
+
+    @Override
+    public List<Report> getReportsByDate() {
+        return NSWAPI.getAPI().getDatabaseManager().getRequestSender().getReportsByDate();
+    }
+
+    @Override
+    public List<Report> getReportsByDateDesc() {
+        return NSWAPI.getAPI().getDatabaseManager().getRequestSender().getReportsByDateDesc();
+    }
+
+    @Override
     public List<Report> getUnResolvedReports() {
         List<Report> unresolvedReports = new ArrayList<>();
         List<Report> reports = getReports();

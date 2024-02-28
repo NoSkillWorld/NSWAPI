@@ -177,6 +177,146 @@ public class RequestSender {
         return result;
     }
 
+    public List<Report> getReportsByName() {
+        query = Queries.RETRIEVE_REPORTS_BY_NAME_ASC.getQuery();
+        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
+
+        int id;
+        UUID creatorUuid;
+        UUID reportedUuid;
+        ReportType type;
+        String reason;
+        boolean isResolved;
+        Timestamp timestamp;
+        List<Report> result = new ArrayList<>();
+
+        requestsHandler.retrieveData(query);
+        try {
+            while (requestsHandler.resultSet.next()) {
+                id = requestsHandler.resultSet.getInt("id");
+                creatorUuid = UUID.fromString(requestsHandler.resultSet.getString("creatorUuid"));
+                reportedUuid = UUID.fromString(requestsHandler.resultSet.getString("reportedUuid"));
+                type = ReportType.getTypeById(requestsHandler.resultSet.getInt("typeId"));
+                reason = requestsHandler.resultSet.getString("reason");
+                isResolved = requestsHandler.resultSet.getBoolean("isResolved");
+                timestamp = requestsHandler.resultSet.getTimestamp("date");
+                result.add(new Report(id, creatorUuid, reportedUuid, type, reason, isResolved, timestamp));
+            }
+        } catch (SQLException e) {
+            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
+            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
+            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
+        } finally {
+            requestsHandler.close();
+        }
+        return result;
+    }
+
+    public List<Report> getReportsByNameDesc() {
+        query = Queries.RETRIEVE_REPORTS_BY_NAME_DESC.getQuery();
+        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
+
+        int id;
+        UUID creatorUuid;
+        UUID reportedUuid;
+        ReportType type;
+        String reason;
+        boolean isResolved;
+        Timestamp timestamp;
+        List<Report> result = new ArrayList<>();
+
+        requestsHandler.retrieveData(query);
+        try {
+            while (requestsHandler.resultSet.next()) {
+                id = requestsHandler.resultSet.getInt("id");
+                creatorUuid = UUID.fromString(requestsHandler.resultSet.getString("creatorUuid"));
+                reportedUuid = UUID.fromString(requestsHandler.resultSet.getString("reportedUuid"));
+                type = ReportType.getTypeById(requestsHandler.resultSet.getInt("typeId"));
+                reason = requestsHandler.resultSet.getString("reason");
+                isResolved = requestsHandler.resultSet.getBoolean("isResolved");
+                timestamp = requestsHandler.resultSet.getTimestamp("date");
+                result.add(new Report(id, creatorUuid, reportedUuid, type, reason, isResolved, timestamp));
+            }
+        } catch (SQLException e) {
+            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
+            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
+            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
+        } finally {
+            requestsHandler.close();
+        }
+        return result;
+    }
+
+    public List<Report> getReportsByDate() {
+        query = Queries.RETRIEVE_REPORTS_BY_DATE_ASC.getQuery();
+        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
+
+        int id;
+        UUID creatorUuid;
+        UUID reportedUuid;
+        ReportType type;
+        String reason;
+        boolean isResolved;
+        Timestamp timestamp;
+        List<Report> result = new ArrayList<>();
+
+        requestsHandler.retrieveData(query);
+        try {
+            while (requestsHandler.resultSet.next()) {
+                id = requestsHandler.resultSet.getInt("id");
+                creatorUuid = UUID.fromString(requestsHandler.resultSet.getString("creatorUuid"));
+                reportedUuid = UUID.fromString(requestsHandler.resultSet.getString("reportedUuid"));
+                type = ReportType.getTypeById(requestsHandler.resultSet.getInt("typeId"));
+                reason = requestsHandler.resultSet.getString("reason");
+                isResolved = requestsHandler.resultSet.getBoolean("isResolved");
+                timestamp = requestsHandler.resultSet.getTimestamp("date");
+                result.add(new Report(id, creatorUuid, reportedUuid, type, reason, isResolved, timestamp));
+            }
+        } catch (SQLException e) {
+            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
+            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
+            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
+        } finally {
+            requestsHandler.close();
+        }
+        return result;
+    }
+
+    public List<Report> getReportsByDateDesc() {
+        query = Queries.RETRIEVE_REPORTS_BY_DATE_DESC.getQuery();
+        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
+
+        int id;
+        UUID creatorUuid;
+        UUID reportedUuid;
+        ReportType type;
+        String reason;
+        boolean isResolved;
+        Timestamp timestamp;
+        List<Report> result = new ArrayList<>();
+
+        requestsHandler.retrieveData(query);
+        try {
+            while (requestsHandler.resultSet.next()) {
+                id = requestsHandler.resultSet.getInt("id");
+                creatorUuid = UUID.fromString(requestsHandler.resultSet.getString("creatorUuid"));
+                reportedUuid = UUID.fromString(requestsHandler.resultSet.getString("reportedUuid"));
+                type = ReportType.getTypeById(requestsHandler.resultSet.getInt("typeId"));
+                reason = requestsHandler.resultSet.getString("reason");
+                isResolved = requestsHandler.resultSet.getBoolean("isResolved");
+                timestamp = requestsHandler.resultSet.getTimestamp("date");
+                result.add(new Report(id, creatorUuid, reportedUuid, type, reason, isResolved, timestamp));
+            }
+        } catch (SQLException e) {
+            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
+            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
+            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
+        } finally {
+            requestsHandler.close();
+        }
+        return result;
+    }
+
     public void createReport(@NotNull NSWPlayer creator, @NotNull NSWPlayer reported, @NotNull ReportType type, String reason) {
         query = String.format(Queries.CREATE_REPORT.getQuery(), creator.getUniqueId(), creator.getName(), reported.getUniqueId(), reported.getName(), type.geTypeId(), type.getDisplayName(), reason);
         requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();

@@ -14,6 +14,34 @@ public interface ReportsHandler {
     List<Report> getReports();
 
     /**
+     * Get the reports sorted by name (asc), resolved or not
+     *
+     * @return a list of reports
+     */
+    List<Report> getReportsByName();
+
+    /**
+     * Get the reports sorted by name (desc), resolved or not
+     *
+     * @return a list of reports
+     */
+    List<Report> getReportsByNameDesc();
+
+    /**
+     * Get the reports sorted by date (asc), resolved or not
+     *
+     * @return a list of reports
+     */
+    List<Report> getReportsByDate();
+
+    /**
+     * Get the reports sorted by date (desc), resolved or not
+     *
+     * @return a list of reports
+     */
+    List<Report> getReportsByDateDesc();
+
+    /**
      * Get a list of unresolved reports
      *
      * @return a list of reports
