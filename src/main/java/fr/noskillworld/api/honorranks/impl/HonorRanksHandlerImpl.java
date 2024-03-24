@@ -17,7 +17,7 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
 
     @Override
     public void init(@NotNull NSWPlayer player) {
-        if (player.hasJoinedOnce()) {
+        if (NSWAPI.getAPI().hasJoinedOnce(player)) {
             int rankId = NSWAPI.getAPI().getDatabaseManager().getRequestSender().getPlayerRankId(player);
             long points = NSWAPI.getAPI().getDatabaseManager().getRequestSender().getPlayerPoints(player);
 
@@ -32,10 +32,20 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
     }
 
     @Override
-    public void gainPlayerPoints(UUID uuid, long honorPoints) {
+    public void setPlayerPoints(UUID uuid, long amount) {
+        playerPoints.replace(uuid, amount);
+    }
+
+    @Override
+    public void gainPlayerPoints(UUID uuid, long amount) {
         long oldPoints = getPlayerPoints(uuid);
 
-        playerPoints.replace(uuid, oldPoints + honorPoints);
+        playerPoints.replace(uuid, oldPoints + amount);
+    }
+
+    @Override
+    public void resetPlayerRank(UUID uuid) {
+        playerRank.replace(uuid, null);
     }
 
     @Override

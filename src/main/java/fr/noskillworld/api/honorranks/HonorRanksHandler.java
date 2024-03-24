@@ -15,12 +15,27 @@ public interface HonorRanksHandler {
     void init(NSWPlayer player);
 
     /**
-     * Append a certain  amount of points for a specific player
+     * Set the player points to a certain value
      *
-     * @param uuid        the uuid of the player
-     * @param honorPoints the amount of points to give
+     * @param uuid the uuid of the player
+     * @param amount the amount of points to set
      */
-    void gainPlayerPoints(UUID uuid, long honorPoints);
+    void setPlayerPoints(UUID uuid, long amount);
+
+    /**
+     * Append a certain amount of points for a specific player
+     *
+     * @param uuid the uuid of the player
+     * @param amount the amount of points to give
+     */
+    void gainPlayerPoints(UUID uuid, long amount);
+
+    /**
+     * Resets the current player rank to default (0)
+     *
+     * @param uuid the uuid of the player
+     */
+    void resetPlayerRank(UUID uuid);
 
     /**
      * Uprank the player if the player have enough points
