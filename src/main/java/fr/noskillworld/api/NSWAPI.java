@@ -6,6 +6,7 @@ import fr.noskillworld.api.honorranks.impl.HonorRanksHandlerImpl;
 import fr.noskillworld.api.reports.impl.ReportHandlerImpl;
 import fr.noskillworld.api.utils.Credentials;
 import fr.noskillworld.api.utils.ServerHandler;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -42,7 +43,8 @@ public class NSWAPI {
         });
     }
 
-    public static NSWAPI create(Credentials credentials) {
+    @Contract("_ -> new")
+    public static @NotNull NSWAPI create(Credentials credentials) {
         creds = credentials;
         return new NSWAPI();
     }
@@ -97,7 +99,11 @@ public class NSWAPI {
         return api;
     }
 
-    public boolean hasJoinedOnce(@NotNull NSWPlayer player) {
+    public boolean hasJoinedOnce(UUID uuid) {
+        NSWPlayer player = NSWAPI.getAPI().getPlayerByUuid(uuid);
+        if (player == null) {
+            return false;
+        }
         return getPlayerByName(player.getName()) != null;
     }
 }
