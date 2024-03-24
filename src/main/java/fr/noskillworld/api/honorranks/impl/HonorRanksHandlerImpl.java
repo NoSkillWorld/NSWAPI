@@ -26,6 +26,7 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
         } else {
             playerRank.putIfAbsent(player.getUniqueId(), null);
             playerPoints.putIfAbsent(player.getUniqueId(), 0L);
+            NSWAPI.getAPI().getPlayers().add(player);
             NSWAPI.getAPI().getDatabaseManager().getRequestSender().initPlayerData(player);
         }
     }

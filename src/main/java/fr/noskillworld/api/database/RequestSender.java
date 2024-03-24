@@ -77,46 +77,6 @@ public class RequestSender {
         return result;
     }
 
-    public NSWPlayer getPlayerByName(String playerName) {
-        query = String.format(Queries.RETRIEVE_PLAYER_NAME.getQuery(), playerName);
-        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
-        NSWPlayer result = null;
-
-        requestsHandler.retrieveData(query);
-        try {
-            if (requestsHandler.resultSet.next()) {
-                result = NSWAPI.getAPI().getPlayerByName(requestsHandler.resultSet.getString("playerName"));
-            }
-        } catch (SQLException e) {
-            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
-            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
-            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
-        } finally {
-            requestsHandler.close();
-        }
-        return result;
-    }
-
-    public NSWPlayer getPlayer(@NotNull NSWPlayer player) {
-        query = String.format(Queries.RETRIEVE_PLAYER.getQuery(), player.getUniqueId().toString());
-        requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
-        NSWPlayer result = null;
-
-        requestsHandler.retrieveData(query);
-        try {
-            if (requestsHandler.resultSet.next()) {
-                result = NSWAPI.getAPI().getPlayerByUuid(UUID.fromString(requestsHandler.resultSet.getString("uuid")));
-            }
-        } catch (SQLException e) {
-            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
-            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
-            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
-        } finally {
-            requestsHandler.close();
-        }
-        return result;
-    }
-
     public List<NSWPlayer> getPlayers() {
         query = Queries.RETRIEVE_ALL_PLAYERS.getQuery();
         requestsHandler = NSWAPI.getAPI().getDatabaseManager().getRequestHandler();
