@@ -10,31 +10,34 @@ import java.sql.SQLException;
 
 public class Connector {
 
+    private final NSWAPI nswapi;
+
     private Connection conn;
 
     private final String user;
     private final String password;
     private final String name;
 
-    public Connector(@NotNull Credentials credentials) {
-        user = credentials.getDBUser();
-        password = credentials.getDBPassword();
-        name = credentials.getDBName();
+    public Connector(NSWAPI api, @NotNull Credentials credentials) {
+        this.nswapi = api;
+        this.user = credentials.getDBUser();
+        this.password = credentials.getDBPassword();
+        this.name = credentials.getDBName();
 
         connect();
     }
 
     public void connect() {
         if (user == null || password == null || name == null) {
-            NSWAPI.getAPI().getLogger().severe("Credentials cannot be empty! Aborting connection.");
+            nswapi.getLogger().severe("Credentials cannot be empty! Aborting connection.");
             return;
         }
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/" + name, user, password);
         } catch (SQLException e) {
-            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
-            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
-            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
+            nswapi.getLogger().severe("SQLException: " + e.getMessage());
+            nswapi.getLogger().severe("SQLState: " + e.getSQLState());
+            nswapi.getLogger().severe("VendorError: " + e.getErrorCode());
         }
     }
 
@@ -50,9 +53,9 @@ public class Connector {
         try {
             conn.close();
         } catch (SQLException e) {
-            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
-            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
-            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
+            nswapi.getLogger().severe("SQLException: " + e.getMessage());
+            nswapi.getLogger().severe("SQLState: " + e.getSQLState());
+            nswapi.getLogger().severe("VendorError: " + e.getErrorCode());
         }
     }
 

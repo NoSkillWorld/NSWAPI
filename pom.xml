@@ -6,7 +6,7 @@
 
     <groupId>fr.noskillworld.api</groupId>
     <artifactId>nswapi</artifactId>
-    <version>0.4.1</version>
+    <version>0.5.0</version>
     <description>
         API for the NoSkillWorld minecraft server.
     </description>

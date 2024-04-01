@@ -33,9 +33,9 @@ public class NSWAPI {
         this.logger = Logger.getLogger("NSWAPI");
 
         this.serverHandler = new ServerHandler();
-        this.databaseManager = new DatabaseManager(creds);
-        this.honorRanksHandler = new HonorRanksHandlerImpl();
-        this.reportHandler = new ReportHandlerImpl();
+        this.databaseManager = new DatabaseManager(api, creds);
+        this.honorRanksHandler = new HonorRanksHandlerImpl(api);
+        this.reportHandler = new ReportHandlerImpl(api);
 
         getServerHandler().getExecutor().execute(() -> {
             getDatabaseManager().getRequestSender().createTables();

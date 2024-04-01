@@ -12,14 +12,22 @@ import java.util.*;
 
 public class HonorRanksHandlerImpl implements HonorRanksHandler {
 
-    private final Map<UUID, @Nullable HonorRanks> playerRank = new HashMap<>();
-    private final Map<UUID, Long> playerPoints = new HashMap<>();
+    private final NSWAPI nswapi;
+
+    private final Map<UUID, @Nullable HonorRanks> playerRank;
+    private final Map<UUID, Long> playerPoints;
+
+    public HonorRanksHandlerImpl(NSWAPI api) {
+        this.nswapi = api;
+        this.playerRank = new HashMap<>();
+        this.playerPoints = new HashMap<>();
+    }
 
     @Override
     public void init(UUID uuid, String name) {
         NSWPlayer player;
 
-        if (NSWAPI.getAPI().hasJoinedOnce(uuid)) {
+        if (nswapi.hasJoinedOnce(uuid)) {
             player = NSWAPI.getAPI().getPlayerByUuid(uuid);
             int rankId = NSWAPI.getAPI().getDatabaseManager().getRequestSender().getPlayerRankId(player);
             long points = NSWAPI.getAPI().getDatabaseManager().getRequestSender().getPlayerPoints(player);
@@ -30,8 +38,8 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
             player = new NSWPlayer(name, uuid);
             playerRank.putIfAbsent(player.getUniqueId(), null);
             playerPoints.putIfAbsent(player.getUniqueId(), 0L);
-            NSWAPI.getAPI().getPlayers().add(player);
-            NSWAPI.getAPI().getDatabaseManager().getRequestSender().initPlayerData(player);
+            nswapi.getPlayers().add(player);
+            nswapi.getDatabaseManager().getRequestSender().initPlayerData(player);
         }
     }
 

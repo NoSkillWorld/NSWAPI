@@ -3,6 +3,7 @@ package fr.noskillworld.api.reports.impl;
 import fr.noskillworld.api.NSWAPI;
 import fr.noskillworld.api.entities.NSWPlayer;
 import fr.noskillworld.api.reports.Report;
+import fr.noskillworld.api.reports.ReportSortType;
 import fr.noskillworld.api.reports.ReportType;
 import fr.noskillworld.api.reports.ReportsHandler;
 import org.jetbrains.annotations.NotNull;
@@ -12,29 +13,35 @@ import java.util.List;
 
 public class ReportHandlerImpl implements ReportsHandler {
 
+    private final NSWAPI nswapi;
+
+    public ReportHandlerImpl(NSWAPI api) {
+        this.nswapi = api;
+    }
+
     @Override
     public List<Report> getReports() {
-        return NSWAPI.getAPI().getDatabaseManager().getRequestSender().getReports();
+        return nswapi.getDatabaseManager().getRequestSender().getReports(ReportSortType.DATE_DESC);
     }
 
     @Override
     public List<Report> getReportsByName() {
-        return NSWAPI.getAPI().getDatabaseManager().getRequestSender().getReportsByName();
+        return nswapi.getDatabaseManager().getRequestSender().getReports(ReportSortType.PLAYER_ASC);
     }
 
     @Override
     public List<Report> getReportsByNameDesc() {
-        return NSWAPI.getAPI().getDatabaseManager().getRequestSender().getReportsByNameDesc();
+        return nswapi.getDatabaseManager().getRequestSender().getReports(ReportSortType.PLAYER_DESC);
     }
 
     @Override
     public List<Report> getReportsByDate() {
-        return NSWAPI.getAPI().getDatabaseManager().getRequestSender().getReportsByDate();
+        return nswapi.getDatabaseManager().getRequestSender().getReports(ReportSortType.DATE_ASC);
     }
 
     @Override
     public List<Report> getReportsByDateDesc() {
-        return NSWAPI.getAPI().getDatabaseManager().getRequestSender().getReportsByDateDesc();
+        return nswapi.getDatabaseManager().getRequestSender().getReports(ReportSortType.DATE_DESC);
     }
 
     @Override
@@ -103,21 +110,21 @@ public class ReportHandlerImpl implements ReportsHandler {
 
     @Override
     public void createReport(@NotNull NSWPlayer creator, @NotNull NSWPlayer reported, ReportType type, String reason) {
-        NSWAPI.getAPI().getServerHandler().getExecutor().execute(() -> NSWAPI.getAPI().getDatabaseManager().getRequestSender().createReport(creator, reported, type, reason));
+        nswapi.getServerHandler().getExecutor().execute(() -> nswapi.getDatabaseManager().getRequestSender().createReport(creator, reported, type, reason));
     }
 
     @Override
     public void deleteReport(int id) {
-        NSWAPI.getAPI().getServerHandler().getExecutor().execute(() -> NSWAPI.getAPI().getDatabaseManager().getRequestSender().deleteReport(id));
+        nswapi.getServerHandler().getExecutor().execute(() -> nswapi.getDatabaseManager().getRequestSender().deleteReport(id));
     }
 
     @Override
     public void markReportAsResolved(int id) {
-        NSWAPI.getAPI().getServerHandler().getExecutor().execute(() -> NSWAPI.getAPI().getDatabaseManager().getRequestSender().markReportAsResolved(id));
+        nswapi.getServerHandler().getExecutor().execute(() -> nswapi.getDatabaseManager().getRequestSender().markReportAsResolved(id));
     }
 
     @Override
     public void markReportAsUnresolved(int id) {
-        NSWAPI.getAPI().getServerHandler().getExecutor().execute(() -> NSWAPI.getAPI().getDatabaseManager().getRequestSender().markReportAsUnresolved(id));
+        nswapi.getServerHandler().getExecutor().execute(() -> nswapi.getDatabaseManager().getRequestSender().markReportAsUnresolved(id));
     }
 }

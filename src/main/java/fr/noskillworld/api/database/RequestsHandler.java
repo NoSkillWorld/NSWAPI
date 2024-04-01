@@ -8,41 +8,44 @@ import java.sql.Statement;
 
 public class RequestsHandler {
 
+    private final NSWAPI nswapi;
+
     public Statement statement;
     public ResultSet resultSet;
 
-    public RequestsHandler() {
-        statement = null;
-        resultSet = null;
+    public RequestsHandler(NSWAPI api) {
+        this.nswapi = api;
+        this.statement = null;
+        this.resultSet = null;
     }
 
     public void retrieveData(String query) {
         if (!isConnected()) {
-            NSWAPI.getAPI().getDatabaseManager().getConnector().connect();
+            nswapi.getDatabaseManager().getConnector().connect();
         }
 
         try {
-            statement = NSWAPI.getAPI().getDatabaseManager().getConnector().getConn().createStatement();
+            statement = nswapi.getDatabaseManager().getConnector().getConn().createStatement();
             resultSet = statement.executeQuery(query);
         } catch (SQLException e) {
-            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
-            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
-            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
+            nswapi.getLogger().severe("SQLException: " + e.getMessage());
+            nswapi.getLogger().severe("SQLState: " + e.getSQLState());
+            nswapi.getLogger().severe("VendorError: " + e.getErrorCode());
         }
     }
 
     public void updateData(String query) {
         if (!isConnected()) {
-            NSWAPI.getAPI().getDatabaseManager().getConnector().connect();
+            nswapi.getDatabaseManager().getConnector().connect();
         }
 
         try {
-            statement = NSWAPI.getAPI().getDatabaseManager().getConnector().getConn().createStatement();
+            statement = nswapi.getDatabaseManager().getConnector().getConn().createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            NSWAPI.getAPI().getLogger().severe("SQLException: " + e.getMessage());
-            NSWAPI.getAPI().getLogger().severe("SQLState: " + e.getSQLState());
-            NSWAPI.getAPI().getLogger().severe("VendorError: " + e.getErrorCode());
+            nswapi.getLogger().severe("SQLException: " + e.getMessage());
+            nswapi.getLogger().severe("SQLState: " + e.getSQLState());
+            nswapi.getLogger().severe("VendorError: " + e.getErrorCode());
         }
     }
 
@@ -65,6 +68,6 @@ public class RequestsHandler {
     }
 
     private boolean isConnected() {
-        return NSWAPI.getAPI().getDatabaseManager().getConnector().isConnected();
+        return nswapi.getDatabaseManager().getConnector().isConnected();
     }
 }
