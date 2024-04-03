@@ -148,7 +148,7 @@ public class RequestSender {
     }
 
     public void updateKitUses(@NotNull NSWPlayer player, int value) {
-        query = String.format(Queries.UPDATE_KIT_USES.getQuery(), player.getUniqueId().toString(), value);
+        query = String.format(Queries.UPDATE_KIT_USES.getQuery(), value, player.getUniqueId().toString());
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);
