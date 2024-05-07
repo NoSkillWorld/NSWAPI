@@ -25,7 +25,7 @@ Add those to your pom.xml
     <dependency>
         <groupId>fr.noskillworld.api</groupId>
         <artifactId>nswapi</artifactId>
-        <version>0.3.3</version>
+        <version>0.5.0</version>
         <scope>compile</scope>
     </dependency>
     ...
@@ -36,9 +36,9 @@ Add those to your pom.xml
 
 To use the api, simply call the create() method just like so:
 ```java
-String user = "User"; //The database user
-String password = "Pass"; //The database password
-String name = "Name"; //The database name
+String user = "User"; //The user of the database
+String password = "Pass"; //The password of the database
+String name = "Name"; //The name of the database
 
 Credentials credentials = new Credentials(user, password, name); //Creates credentials
 NSWAPI api = NSWAPI.create(credentials); //Creates an instance of the API
