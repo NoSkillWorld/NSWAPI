@@ -33,6 +33,24 @@ public class RequestSender {
         requestsHandler.close();
     }
 
+    public boolean isPlayerExists(@NotNull UUID uuid) {
+        query = String.format(Queries.RETRIEVE_PLAYER_NAME.getQuery(), uuid);
+        requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
+        requestsHandler.retrieveData(query);
+        try {
+            if (requestsHandler.resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            nswapi.getLogger().severe("SQLException: " + e.getMessage());
+            nswapi.getLogger().severe("SQLState: " + e.getSQLState());
+            nswapi.getLogger().severe("VendorError: " + e.getErrorCode());
+        } finally {
+            requestsHandler.close();
+        }
+        return false;
+    }
+
     public void updatePlayerData(@NotNull NSWPlayer player, int rankId, long honorPoints) {
         query = String.format(Queries.UPDATE_PLAYER_DATA.getQuery(), rankId, (int) honorPoints, player.getUniqueId().toString());
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();

@@ -100,10 +100,9 @@ public class NSWAPI {
     }
 
     public boolean hasJoinedOnce(UUID uuid) {
-        NSWPlayer player = NSWAPI.getAPI().getPlayerByUuid(uuid);
-        if (player == null) {
-            return false;
+        if (NSWAPI.getAPI().getPlayerByUuid(uuid) != null) {
+            return true;
         }
-        return getPlayerByName(player.getName()) != null;
+        return NSWAPI.getAPI().getDatabaseManager().getRequestSender().isPlayerExists(uuid);
     }
 }
