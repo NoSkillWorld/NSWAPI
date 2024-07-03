@@ -6,7 +6,7 @@
 
     <groupId>fr.noskillworld.api</groupId>
     <artifactId>nswapi</artifactId>
-    <version>0.5.1</version>
+    <version>0.5.2</version>
     <description>
         API for the NoSkillWorld minecraft server.
     </description>
@@ -59,7 +59,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.4.1</version>
                 <executions>
                     <execution>
                         <id>default-jar</id>
@@ -97,7 +97,7 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>8.2.0</version>
+            <version>9.0.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.google.protobuf</groupId>

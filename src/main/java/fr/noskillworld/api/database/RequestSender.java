@@ -17,16 +17,14 @@ public class RequestSender {
 
     private final NSWAPI nswapi;
 
-    private String query;
     private RequestsHandler requestsHandler;
 
     public RequestSender(NSWAPI api) {
         this.nswapi = api;
-        this.query = null;
     }
 
     public void initPlayerData(@NotNull NSWPlayer player) {
-        query = String.format(Queries.INIT_PLAYER_DATA.getQuery(), player.getUniqueId().toString(), player.getName());
+        String query = String.format(Queries.INIT_PLAYER_DATA.getQuery(), player.getUniqueId().toString(), player.getName());
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);
@@ -34,7 +32,7 @@ public class RequestSender {
     }
 
     public boolean isPlayerExists(@NotNull UUID uuid) {
-        query = String.format(Queries.RETRIEVE_PLAYER_NAME.getQuery(), uuid);
+        String query = String.format(Queries.RETRIEVE_PLAYER_NAME.getQuery(), uuid);
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
         requestsHandler.retrieveData(query);
         try {
@@ -52,7 +50,7 @@ public class RequestSender {
     }
 
     public void updatePlayerData(@NotNull NSWPlayer player, int rankId, long honorPoints) {
-        query = String.format(Queries.UPDATE_PLAYER_DATA.getQuery(), rankId, (int) honorPoints, player.getUniqueId().toString());
+        String query = String.format(Queries.UPDATE_PLAYER_DATA.getQuery(), rankId, (int) honorPoints, player.getUniqueId().toString());
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);
@@ -60,7 +58,7 @@ public class RequestSender {
     }
 
     public int getPlayerRankId(@NotNull NSWPlayer player) {
-        query = String.format(Queries.RETRIEVE_PLAYER_RANK.getQuery(), player.getUniqueId().toString());
+        String query = String.format(Queries.RETRIEVE_PLAYER_RANK.getQuery(), player.getUniqueId().toString());
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
         int result = 0;
 
@@ -80,7 +78,7 @@ public class RequestSender {
     }
 
     public long getPlayerPoints(@NotNull NSWPlayer player) {
-        query = String.format(Queries.RETRIEVE_PLAYER_POINTS.getQuery(), player.getUniqueId().toString());
+        String query = String.format(Queries.RETRIEVE_PLAYER_POINTS.getQuery(), player.getUniqueId().toString());
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
         long result = 0;
 
@@ -100,7 +98,7 @@ public class RequestSender {
     }
 
     public List<NSWPlayer> getPlayers() {
-        query = Queries.RETRIEVE_ALL_PLAYERS.getQuery();
+        String query = Queries.RETRIEVE_ALL_PLAYERS.getQuery();
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
 
         String name;
@@ -125,6 +123,8 @@ public class RequestSender {
     }
 
     public List<Report> getReports(@NotNull ReportSortType sortType) {
+        String query;
+
         switch (sortType) {
             case PLAYER_DESC -> query = Queries.RETRIEVE_REPORTS_BY_NAME_ASC.getQuery();
             case PLAYER_ASC -> query = Queries.RETRIEVE_REPORTS_BY_NAME_DESC.getQuery();
@@ -166,7 +166,7 @@ public class RequestSender {
     }
 
     public void updateKitUses(@NotNull NSWPlayer player, int value) {
-        query = String.format(Queries.UPDATE_KIT_USES.getQuery(), value, player.getUniqueId().toString());
+        String query = String.format(Queries.UPDATE_KIT_USES.getQuery(), value, player.getUniqueId().toString());
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);
@@ -174,7 +174,7 @@ public class RequestSender {
     }
 
     public int getKitUses(@NotNull NSWPlayer player) {
-        query = String.format(Queries.RETRIEVE_KIT_USES.getQuery(), player.getUniqueId().toString());
+        String query = String.format(Queries.RETRIEVE_KIT_USES.getQuery(), player.getUniqueId().toString());
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
         int result = 0;
 
@@ -194,7 +194,7 @@ public class RequestSender {
     }
 
     public void createReport(@NotNull NSWPlayer creator, @NotNull NSWPlayer reported, @NotNull ReportType type, String reason) {
-        query = String.format(Queries.CREATE_REPORT.getQuery(), creator.getUniqueId(), creator.getName(), reported.getUniqueId(), reported.getName(), type.geTypeId(), type.getDisplayName(), reason);
+        String query = String.format(Queries.CREATE_REPORT.getQuery(), creator.getUniqueId(), creator.getName(), reported.getUniqueId(), reported.getName(), type.geTypeId(), type.getDisplayName(), reason);
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);
@@ -202,7 +202,7 @@ public class RequestSender {
     }
 
     public void deleteReport(int id) {
-        query = String.format(Queries.DELETE_REPORT.getQuery(), id);
+        String query = String.format(Queries.DELETE_REPORT.getQuery(), id);
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);
@@ -210,7 +210,7 @@ public class RequestSender {
     }
 
     public void markReportAsResolved(int id) {
-        query = String.format(Queries.MARK_REPORT_RESOLVED.getQuery(), id);
+        String query = String.format(Queries.MARK_REPORT_RESOLVED.getQuery(), id);
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);
@@ -218,7 +218,7 @@ public class RequestSender {
     }
 
     public void markReportAsUnresolved(int id) {
-        query = String.format(Queries.MARK_REPORT_UNRESOLVED.getQuery(), id);
+        String query = String.format(Queries.MARK_REPORT_UNRESOLVED.getQuery(), id);
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);
@@ -226,7 +226,7 @@ public class RequestSender {
     }
 
     public void setMinecraftStats(int deathCount, int killCount, long timePlayed, UUID uuid) {
-        query = String.format(Queries.UPDATE_MC_STATS.getQuery(), deathCount, killCount, timePlayed, uuid);
+        String query = String.format(Queries.UPDATE_MC_STATS.getQuery(), deathCount, killCount, timePlayed, uuid);
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);
@@ -234,7 +234,7 @@ public class RequestSender {
     }
 
     public int getReportsCount() {
-        query = Queries.RETRIEVE_REPORTS_COUNTS.getQuery();
+        String query = Queries.RETRIEVE_REPORTS_COUNTS.getQuery();
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
         int result = 0;
 
@@ -258,7 +258,7 @@ public class RequestSender {
     }
 
     private void createPlayerDataTable() {
-        query = Queries.CREATE_PLAYER_DATA_TABLE.getQuery();
+        String query = Queries.CREATE_PLAYER_DATA_TABLE.getQuery();
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
 
         requestsHandler.updateData(query);

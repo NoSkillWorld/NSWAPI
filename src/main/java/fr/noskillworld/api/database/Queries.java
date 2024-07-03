@@ -30,7 +30,7 @@ public enum Queries {
             CREATE TABLE IF NOT EXISTS core_playerdata
             (
                 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-                uuid VARCHAR(36) NOT NULL,
+                uuid VARCHAR(36) NOT NULL UNIQUE,
                 playerName VARCHAR(50) NOT NULL,
                 rankId INT(1) NOT NULL,
                 honorPoints INT(5) NOT NULL,
