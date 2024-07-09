@@ -28,9 +28,9 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
         NSWPlayer player;
 
         if (nswapi.hasJoinedOnce(uuid)) {
-            player = NSWAPI.getAPI().getPlayerByUuid(uuid);
-            int rankId = NSWAPI.getAPI().getDatabaseManager().getRequestSender().getPlayerRankId(player);
-            long points = NSWAPI.getAPI().getDatabaseManager().getRequestSender().getPlayerPoints(player);
+            player = nswapi.getPlayerByUuid(uuid);
+            int rankId = nswapi.getDatabaseManager().getRequestSender().getPlayerRankId(player);
+            long points = nswapi.getDatabaseManager().getRequestSender().getPlayerPoints(player);
 
             playerRank.putIfAbsent(player.getUniqueId(), HonorRanks.getRankById(rankId));
             playerPoints.putIfAbsent(player.getUniqueId(), points);

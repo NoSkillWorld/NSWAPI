@@ -42,7 +42,7 @@ public class NSWAPI {
 
         getServerHandler().getExecutor().execute(() -> {
             getDatabaseManager().getRequestSender().createTables();
-            init_players();
+            initPlayers();
         });
     }
 
@@ -74,7 +74,7 @@ public class NSWAPI {
         return players;
     }
 
-    private void init_players() {
+    private void initPlayers() {
         players = getDatabaseManager().getRequestSender().getPlayers();
     }
 
