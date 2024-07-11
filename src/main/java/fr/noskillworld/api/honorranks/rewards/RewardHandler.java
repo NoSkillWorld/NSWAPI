@@ -8,7 +8,7 @@ import java.util.*;
 public class RewardHandler {
 
     public final HashMap<HonorRanks, List<HonorRankReward>> rankRewards;
-    public final HashMap<UUID, List<HonorRankReward>> claimedRewards;
+    private final HashMap<UUID, List<HonorRankReward>> claimedRewards;
 
     public RewardHandler() {
         this.rankRewards = new HashMap<>();
