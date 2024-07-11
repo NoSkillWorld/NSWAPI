@@ -3,17 +3,36 @@ package fr.noskillworld.api.honorranks.rewards;
 import fr.noskillworld.api.honorranks.HonorRanks;
 import fr.noskillworld.api.honorranks.rewards.impl.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class RewardHandler {
 
     public final HashMap<HonorRanks, List<HonorRankReward>> rankRewards;
+    public final HashMap<UUID, List<HonorRankReward>> claimedRewards;
 
     public RewardHandler() {
         this.rankRewards = new HashMap<>();
+        this.claimedRewards = new HashMap<>();
         setupRewards();
+    }
+
+    public void setRewardClaimed(UUID uuid, HonorRankReward reward) {
+        if (!claimedRewards.containsKey(uuid) || claimedRewards.get(uuid) == null) {
+            claimedRewards.put(uuid, new ArrayList<>());
+        }
+        claimedRewards.get(uuid).add(reward);
+    }
+
+    public boolean hasClaimedReward(UUID uuid, HonorRankReward reward) {
+        if (!claimedRewards.containsKey(uuid) || claimedRewards.get(uuid) == null) {
+            return false;
+        }
+        for (HonorRankReward r : claimedRewards.get(uuid)) {
+            if (r.equals(reward)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void addRewards(HonorRanks rank, HonorRankReward... rewards) {
