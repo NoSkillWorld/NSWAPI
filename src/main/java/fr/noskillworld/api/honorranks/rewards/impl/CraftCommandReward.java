@@ -12,7 +12,7 @@ public class CraftCommandReward implements HonorRankReward {
 
     @Override
     public String getDescription() {
-        return "Accès à la commande /craft";
+        return "Accès à la commande §3" + getName();
     }
 
     @Override

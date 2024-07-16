@@ -18,7 +18,7 @@ public class NSCoinReward implements HonorRankReward {
 
     @Override
     public String getDescription() {
-        return "";
+        return "Gain de §3" + amount + "§f NSc";
     }
 
     @Override

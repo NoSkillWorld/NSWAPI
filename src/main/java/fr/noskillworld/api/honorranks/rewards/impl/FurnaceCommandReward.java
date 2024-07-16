@@ -12,7 +12,7 @@ public class FurnaceCommandReward implements HonorRankReward {
 
     @Override
     public String getDescription() {
-        return "Accès à la commande /furnace";
+        return "Accès à la commande §3" + getName();
     }
 
     @Override

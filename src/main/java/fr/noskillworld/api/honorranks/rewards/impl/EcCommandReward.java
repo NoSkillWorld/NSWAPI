@@ -12,7 +12,7 @@ public class EcCommandReward implements HonorRankReward {
 
     @Override
     public String getDescription() {
-        return "Accès à la commande /ec";
+        return "Accès à la commande §3" + getName();
     }
 
     @Override

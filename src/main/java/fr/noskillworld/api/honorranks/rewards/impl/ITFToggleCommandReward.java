@@ -12,7 +12,7 @@ public class ITFToggleCommandReward implements HonorRankReward {
 
     @Override
     public String getDescription() {
-        return "";
+        return "Accès à la commande §3" + getName();
     }
 
     @Override

@@ -12,7 +12,7 @@ public class TopCommandReward implements HonorRankReward {
 
     @Override
     public String getDescription() {
-        return "Accès à la commande /top";
+        return "Accès à la commande §3" + getName();
     }
 
     @Override
