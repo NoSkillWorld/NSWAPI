@@ -39,7 +39,8 @@ public enum Queries {
                 deathCount INT(5),
                 killCount INT(5),
                 timePlayed BIGINT,
-                kitUses INT(2)
+                kitUses INT(2),
+                claimedRewards TEXT(256)
             );
             """);
 
