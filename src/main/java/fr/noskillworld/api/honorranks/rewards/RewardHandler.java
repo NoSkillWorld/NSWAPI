@@ -1,5 +1,6 @@
 package fr.noskillworld.api.honorranks.rewards;
 
+import fr.noskillworld.api.NSWAPI;
 import fr.noskillworld.api.honorranks.HonorRanks;
 import fr.noskillworld.api.honorranks.rewards.impl.*;
 
@@ -7,10 +8,13 @@ import java.util.*;
 
 public class RewardHandler {
 
-    public final HashMap<HonorRanks, List<HonorRankReward>> rankRewards;
-    private final HashMap<UUID, List<HonorRankReward>> claimedRewards;
+    private final NSWAPI nswapi;
 
-    public RewardHandler() {
+    public final HashMap<HonorRanks, List<HonorRankReward>> rankRewards;
+    public final HashMap<UUID, List<HonorRankReward>> claimedRewards;
+
+    public RewardHandler(NSWAPI api) {
+        this.nswapi = api;
         this.rankRewards = new HashMap<>();
         this.claimedRewards = new HashMap<>();
         setupRewards();
@@ -20,7 +24,35 @@ public class RewardHandler {
         if (!claimedRewards.containsKey(uuid) || claimedRewards.get(uuid) == null) {
             claimedRewards.put(uuid, new ArrayList<>());
         }
+        String rewards = retrieveClaimedRewards(uuid);
+
+        if (rewards == null || rewards.equalsIgnoreCase("null")) {
+            rewards = reward.getId();
+        } else {
+            rewards = rewards + "," + reward.getId();
+        }
         claimedRewards.get(uuid).add(reward);
+        nswapi.getDatabaseManager().getRequestSender().setClaimedRewards(uuid, rewards);
+    }
+
+    public void initClaimedRewards(UUID uuid) {
+        if (claimedRewards.containsKey(uuid) || claimedRewards.get(uuid) != null) {
+            return;
+        }
+        String[] rewards = retrieveClaimedRewards(uuid).split(",");
+        List<HonorRankReward> rewardList = rankRewards.get(nswapi.getHonorRanksHandler().getPlayerRank(uuid));
+
+        if (rewards[0].equalsIgnoreCase("NULL")) {
+            return;
+        }
+        claimedRewards.put(uuid, new ArrayList<>());
+        for (String reward : rewards) {
+            for (HonorRankReward r : rewardList) {
+                if (reward.equalsIgnoreCase(r.getId())) {
+                    claimedRewards.get(uuid).add(r);
+                }
+            }
+        }
     }
 
     public boolean hasClaimedReward(UUID uuid, HonorRankReward reward) {
@@ -33,6 +65,10 @@ public class RewardHandler {
             }
         }
         return false;
+    }
+
+    private String retrieveClaimedRewards(UUID uuid) {
+        return nswapi.getDatabaseManager().getRequestSender().retrieveClaimedRewards(uuid);
     }
 
     private void addRewards(HonorRanks rank, HonorRankReward... rewards) {

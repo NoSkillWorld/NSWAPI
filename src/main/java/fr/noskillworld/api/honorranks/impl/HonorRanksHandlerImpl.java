@@ -41,6 +41,7 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
             nswapi.getPlayers().add(player);
             nswapi.getDatabaseManager().getRequestSender().initPlayerData(player);
         }
+        nswapi.getRewardHandler().initClaimedRewards(uuid);
     }
 
     @Override
@@ -72,6 +73,8 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
 
                 playerPoints.replace(uuid, points);
                 playerRank.replace(uuid, nextRank);
+                nswapi.getDatabaseManager().getRequestSender().setClaimedRewards(uuid, "NULL");
+                nswapi.getRewardHandler().claimedRewards.replace(uuid, null);
             }
         }
     }
@@ -81,6 +84,8 @@ public class HonorRanksHandlerImpl implements HonorRanksHandler {
         if (getNextPlayerRank(uuid) != null) {
             HonorRanks nextRank = getNextPlayerRank(uuid);
             playerRank.replace(uuid, nextRank);
+            nswapi.getDatabaseManager().getRequestSender().setClaimedRewards(uuid, "NULL");
+            nswapi.getRewardHandler().claimedRewards.replace(uuid, null);
         }
     }
 

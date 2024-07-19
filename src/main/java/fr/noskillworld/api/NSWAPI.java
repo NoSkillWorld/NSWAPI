@@ -37,7 +37,7 @@ public class NSWAPI {
         this.serverHandler = new ServerHandler();
         this.databaseManager = new DatabaseManager(api, creds);
         this.honorRanksHandler = new HonorRanksHandlerImpl(api);
-        this.rewardHandler = new RewardHandler();
+        this.rewardHandler = new RewardHandler(api);
         this.reportHandler = new ReportHandlerImpl(api);
 
         getServerHandler().getExecutor().execute(() -> {

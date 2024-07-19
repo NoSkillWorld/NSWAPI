@@ -10,6 +10,7 @@ public enum Queries {
     MARK_REPORT_UNRESOLVED("UPDATE core_reports SET isResolved = 0 WHERE id = %d;"),
     UPDATE_PLAYER_DATA("UPDATE core_playerdata SET rankId = %d, honorPoints = %d WHERE uuid = '%s';"),
     UPDATE_KIT_USES("UPDATE core_playerdata SET kitUses = %d WHERE uuid = '%s';"),
+    UPDATE_CLAIMED_REWARDS("UPDATE core_playerdata SET claimedRewards = '%s' WHERE uuid = '%s';"),
 
     //Retrieve data reqs
     RETRIEVE_PLAYER_RANK("SELECT rankId FROM core_playerdata WHERE uuid = '%s';"),
@@ -24,6 +25,7 @@ public enum Queries {
     RETRIEVE_PLAYER("SELECT uuid FROM core_playerdata WHERE uuid = '%s';"),
     RETRIEVE_REPORTS_COUNTS("SELECT COUNT(*) FROM core_reports;"),
     RETRIEVE_KIT_USES("SELECT kitUses FROM core_playerdata WHERE uuid = '%s';"),
+    RETRIEVE_CLAIMED_REWARDS("SELECT claimedRewards FROM core_playerdata WHERE uuid = '%s';"),
 
     //Create tables reqs
     CREATE_PLAYER_DATA_TABLE("""

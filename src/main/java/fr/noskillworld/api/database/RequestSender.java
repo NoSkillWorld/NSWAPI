@@ -193,6 +193,34 @@ public class RequestSender {
         return result;
     }
 
+    public String retrieveClaimedRewards(@NotNull UUID uuid) {
+        String query = String.format(Queries.RETRIEVE_CLAIMED_REWARDS.getQuery(), uuid);
+        requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
+        String result = null;
+
+        requestsHandler.retrieveData(query);
+        try {
+            if (requestsHandler.resultSet.next()) {
+                result = requestsHandler.resultSet.getString("claimedRewards");
+            }
+        } catch (SQLException e) {
+            nswapi.getLogger().severe("SQLException: " + e.getMessage());
+            nswapi.getLogger().severe("SQLState: " + e.getSQLState());
+            nswapi.getLogger().severe("VendorError: " + e.getErrorCode());
+        } finally {
+            requestsHandler.close();
+        }
+        return result;
+    }
+
+    public void setClaimedRewards(@NotNull UUID uuid, @NotNull String rewards) {
+        String query = String.format(Queries.UPDATE_CLAIMED_REWARDS.getQuery(), rewards, uuid);
+        requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
+
+        requestsHandler.updateData(query);
+        requestsHandler.close();
+    }
+
     public void createReport(@NotNull NSWPlayer creator, @NotNull NSWPlayer reported, @NotNull ReportType type, String reason) {
         String query = String.format(Queries.CREATE_REPORT.getQuery(), creator.getUniqueId(), creator.getName(), reported.getUniqueId(), reported.getName(), type.geTypeId(), type.getDisplayName(), reason);
         requestsHandler = nswapi.getDatabaseManager().getRequestHandler();
