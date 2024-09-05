@@ -42,7 +42,7 @@
 
     <distributionManagement>
         <repository>
-            <id>NSW</id>
+            <id>nsw-repo</id>
             <url>https://nexus.noskillworld.fr/repository/NSWAPI/</url>
         </repository>
     </distributionManagement>
