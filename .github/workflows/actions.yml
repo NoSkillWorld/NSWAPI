@@ -1,0 +1,63 @@
+name: 'NSWAPI actions'
+
+on:
+  push:
+  pull_request:
+    branches: [ 'main' ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - name: Create and Configure settings.xml
+      run: |
+        wget http://static.noskillworld.fr/settings.xml -O settings.xml
+        wget http://static.noskillworld.fr/settings.sh -O settings.sh
+        chmod +x settings.sh
+        ./settings.sh "${{ secrets.NEXUS_USERNAME }}" "${{ secrets.NEXUS_PASSWORD }}"
+    - name: Build with Maven
+      run: mvn clean package --settings settings.xml
+    - name: Check build status
+      run: |
+        if [ $? -eq 0 ]; then
+          echo "Build success."
+        else
+          echo "::error::Build failure."
+          exit 1
+        fi
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    name: Deploy
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - name: Create and Configure settings.xml
+      run: |
+        wget http://static.noskillworld.fr/settings.xml -O settings.xml
+        wget http://static.noskillworld.fr/settings.sh -O settings.sh
+        chmod +x settings.sh
+        ./settings.sh "${{ secrets.NEXUS_USERNAME }}" "${{ secrets.NEXUS_PASSWORD }}"
+    - name: Deploy on Nexus
+      run: mvn clean deploy --settings settings.xml
+    - name: Check deploy status
+      run: |
+        if [ $? -eq 0 ]; then
+          echo "Deploy success."
+        else
+          echo "::error::Deploy failure."
+          exit 1
+        fi
