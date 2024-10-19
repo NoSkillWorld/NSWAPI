@@ -2,6 +2,7 @@ package fr.noskillworld.api;
 
 import fr.noskillworld.api.database.DatabaseManager;
 import fr.noskillworld.api.entities.NSWPlayer;
+import fr.noskillworld.api.gui.GuiManager;
 import fr.noskillworld.api.honorranks.impl.HonorRanksHandlerImpl;
 import fr.noskillworld.api.honorranks.rewards.RewardHandler;
 import fr.noskillworld.api.reports.impl.ReportHandlerImpl;
@@ -25,6 +26,7 @@ public class NSWAPI {
     private final RewardHandler rewardHandler;
     private final ReportHandlerImpl reportHandler;
     private final ServerHandler serverHandler;
+    private final GuiManager guiManager;
 
     private static Credentials creds;
 
@@ -39,6 +41,7 @@ public class NSWAPI {
         this.honorRanksHandler = new HonorRanksHandlerImpl(api);
         this.rewardHandler = new RewardHandler(api);
         this.reportHandler = new ReportHandlerImpl(api);
+        this.guiManager = new GuiManager();
 
         getServerHandler().getExecutor().execute(() -> {
             getDatabaseManager().getRequestSender().createTables();
@@ -100,6 +103,10 @@ public class NSWAPI {
 
     public ServerHandler getServerHandler() {
         return serverHandler;
+    }
+
+    public GuiManager getGuiManager() {
+        return guiManager;
     }
 
     public static NSWAPI getAPI() {

@@ -6,7 +6,7 @@
 
     <groupId>fr.noskillworld.api</groupId>
     <artifactId>nswapi</artifactId>
-    <version>0.6.1</version>
+    <version>1.0.0</version>
     <description>
         API for the NoSkillWorld minecraft server.
     </description>
@@ -22,8 +22,8 @@
     </developers>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -51,6 +51,10 @@
         <repository>
             <id>iridiumdevelopment</id>
             <url>https://nexus.iridiumdevelopment.net/repository/maven-releases/</url>
+        </repository>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
     </repositories>
 
@@ -109,6 +113,12 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>24.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.21.1-R0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
