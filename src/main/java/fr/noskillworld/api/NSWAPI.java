@@ -1,5 +1,6 @@
 package fr.noskillworld.api;
 
+import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import fr.noskillworld.api.database.DatabaseManager;
 import fr.noskillworld.api.entities.NSWPlayer;
 import fr.noskillworld.api.gui.GuiManager;
@@ -107,6 +108,10 @@ public class NSWAPI {
 
     public GuiManager getGuiManager() {
         return guiManager;
+    }
+
+    public String getColoredName() {
+        return IridiumColorAPI.process("<GRADIENT:2C70BA>§lNoSkillWorld</GRADIENT:42cfcf>");
     }
 
     public static NSWAPI getAPI() {
